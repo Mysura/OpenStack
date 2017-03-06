@@ -1,0 +1,21 @@
+spring:
+    datasource:
+        url: jdbc:mysql://localhost:3306/nvaultdb
+        username : root
+        password : nisum@06
+        testWhileIdle : true
+        validationQuery : SELECT 1
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+            dialect : org.hibernate.dialect.MySQL5Dialect 
+    data:
+        mongodb:
+              database: sample 
+              host: localhost
+              port: 27017
+objSize : 10
+server:
+  port: 9006

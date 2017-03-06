@@ -1,0 +1,54 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+plugins {
+    id "org.sonarqube" version "2.2.1"
+}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'org.sonarqube'
+apply plugin: 'jacoco'
+apply plugin: 'war'
+
+jar {
+	baseName = 'boot-gradle'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+war {
+	archiveName 'sampleGradle.war'
+    }
+
+
+sonarqube {
+  properties {
+    property "sonar.projectName", "SampleGradle"
+    property "sonar.projectKey", "SampleGradle"
+    property "sonar.test.inclusions","${project.buildDir}/src/test/java"
+    property "sonar.java.coveragePlugin", "jacoco"
+    property "sonar.jacoco.reportPath", "${buildDir}/jacoco/test.exec"
+    property "sonar.web.port",9000
+  }
+}
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web','org.springframework.boot:spring-boot-devtools','org.springframework.boot:spring-boot-starter-data-mongodb','org.projectlombok:lombok:1.16.2','com.google.code.gson:gson:2.3.1')
+	compile("org.apache.jclouds.driver:jclouds-slf4j:1.8.1")
+    compile("org.apache.jclouds.api:openstack-swift:1.8.1")
+	runtime('mysql:mysql-connector-java:5.1.37')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
